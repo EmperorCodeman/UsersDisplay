@@ -1,4 +1,4 @@
-axios = require("axios")
+const axios = require("axios")
 
 axios.get('https://randomuser.me/api/?results=3')
   .then(function (response) {
