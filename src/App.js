@@ -54,19 +54,18 @@ class App extends Component {
       </div>)}
       </Carousel.Item>
   </Carousel>;
-  {user && show && <Modal show={show} onHide={this.handleClose}>
+  {user && show && 
+  <Modal show={show} onHide={this.handleClose}>
     <Modal.Header closeButton>
       <Modal.Title>{user.name.first}</Modal.Title>
     </Modal.Header>
 
     <Modal.Body>{Object.keys(user).map((key) => {
       const value = user[key]
-      return <div key={key}>
-        `${key}: ${JSON.stringify(value)}`
-      </div>
-    })}</Modal.Body>
-    <Modal.Body>{user.name.first}</Modal.Body>
-    
+      return <div key={key}>`${key}: ${JSON.stringify(value)}`</div>
+      })
+    }
+    </Modal.Body>
 
     <Modal.Footer>
       <Button onClick={this.handleClose}>Close</Button>
