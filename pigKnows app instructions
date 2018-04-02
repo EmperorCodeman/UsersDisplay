@@ -1,0 +1,27 @@
+Install mongodb on system
+
+then run database =>
+
+	create folder for database then move into, create sub folder data for example, then 
+		 mongod --dbpath=data
+	will create database in data and serve database on port 27017
+
+cd into app, then run load the db with
+
+	node loaddb
+
+press control + c to return to terminal after brief wait
+
+Install dependencies
+
+	npm install
+
+move into app folder and run app
+
+	npm start
+
+go to web browser and go to localhost:3000
+
+CAVEOTS
+	database url inside app.js on backend must be correct, should not be issue though.
+	If port 3000 is in use listen on alternative port
