@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Carousel, Modal, Button, Image, Grid, Row} from "react-bootstrap" 
+import {Carousel, Modal, Button, Image, Footer} from "react-bootstrap" 
 import logo from './logo.svg';
 import './App.css';
 import initialUsers from './static/users.json'
@@ -23,13 +23,11 @@ class App extends Component {
   }
 
   handleSelect = (key, event) => {
-    //console.log("estdd", key, event)    
     //'https://randomuser.me/api/?results=3'
     axios.get('https://randomuser.me/api/?results=3')
     .then( (response) => {
       this.setState({ users: response.data.results})
       //console.log(response.data.results[0], "hello");
-      //console.log(this.state.users), "state ";
       return response.data.results
   })
   .catch(function (error) {
@@ -56,8 +54,7 @@ class App extends Component {
       {user && show && 
       <Modal show={show} onHide={this.handleClose}>
         <Modal.Header style={{display: 'flex', justifyContent: 'center'}}>
-          <Image circle src={user.picture.large}/>  
-          {/* <Modal.Title>{user.name.first}</Modal.Title> */}
+          <Image circle src={user.picture.large}/>
         </Modal.Header>
         <Modal.Body>{Object.keys(user).map((key) => {
           if (key == "picture") return 
@@ -76,12 +73,12 @@ class App extends Component {
           })
         }
         </Modal.Body>
-
         <Modal.Footer>
           <Button onClick={this.handleClose}>Close</Button>
         </Modal.Footer>
       </Modal>
       }
+      
     </div>
     );
   }
