@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Carousel, Modal, Button, Image, Footer} from "react-bootstrap" 
+import {Carousel, Modal, Button, Image} from "react-bootstrap" 
 import logo from './logo.svg';
 import './App.css';
 import initialUsers from './static/users.json'
@@ -57,8 +57,8 @@ class App extends Component {
           <Image circle src={user.picture.large}/>
         </Modal.Header>
         <Modal.Body>{Object.keys(user).map((key) => {
-          if (key == "picture") return 
-          if (key == "login"){
+          if (key === "picture") return 
+          if (key === "login"){
           const login = user[key]
           return <div>
               <div>
