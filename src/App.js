@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Carousel, Modal, Button} from "react-bootstrap" 
+import {Carousel, Modal, Button, Image, Grid, Row} from "react-bootstrap" 
 import logo from './logo.svg';
 import './App.css';
 import initialUsers from './static/users.json'
@@ -27,7 +27,6 @@ class App extends Component {
     //'https://randomuser.me/api/?results=3'
     axios.get('https://randomuser.me/api/?results=3')
     .then( (response) => {
-      // concat new user array to existing array
       this.setState({ users: response.data.results})
       //console.log(response.data.results[0], "hello");
       //console.log(this.state.users), "state ";
@@ -40,38 +39,50 @@ class App extends Component {
   render() {
     const { user, show, users } = this.state
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">TEst Welcome to React</h1>
-        </header>
-  <Carousel onSelect = {this.handleSelect}>
-      <Carousel.Item>
-      {users.map(user => 
-      <div key={user.name.first} onClick={this.handleClick.bind(this,user)}>
-        <img width={200} height={150} alt="900x500" src={user.picture.medium} />
-          <h3>{user.name.first}</h3>
-      </div>)}
-      </Carousel.Item>
-  </Carousel>;
-  {user && show && 
-  <Modal show={show} onHide={this.handleClose}>
-    <Modal.Header closeButton>
-      <Modal.Title>{user.name.first}</Modal.Title>
-    </Modal.Header>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1 className="App-title">Welcome to Users Carousel</h1>
+      </header>
+      <Carousel onSelect = {this.handleSelect}>
+          <Carousel.Item style={{paddingTop:"30px"}}>
+          {users.map(user => 
+          <div key={user.name.first} onClick={this.handleClick.bind(this,user)}>
+            <Image rounded width={200} height={150} alt="User Picture" src={user.picture.medium}/>
+              <h3>{user.name.first}</h3>
+          </div>)}
+          </Carousel.Item>
+      </Carousel>
+      {user && show && 
+      <Modal show={show} onHide={this.handleClose}>
+        <Modal.Header style={{display: 'flex', justifyContent: 'center'}}>
+          <Image circle src={user.picture.large}/>  
+          {/* <Modal.Title>{user.name.first}</Modal.Title> */}
+        </Modal.Header>
+        <Modal.Body>{Object.keys(user).map((key) => {
+          if (key == "picture") return 
+          if (key == "login"){
+          const login = user[key]
+          return <div>
+              <div>
+              username: {login.username} password: {login.password} salt: {login.salt}
+              </div>
+              <div>
+              md5": {login.md5} sha1: {login.sha1} sha256: {login.sha256}
+              </div> 
+            </div>}  
+          const value = user[key]
+          return <div key={key}>{key}: {JSON.stringify(value)}</div>
+          })
+        }
+        </Modal.Body>
 
-    <Modal.Body>{Object.keys(user).map((key) => {
-      const value = user[key]
-      return <div key={key}>`${key}: ${JSON.stringify(value)}`</div>
-      })
-    }
-    </Modal.Body>
-
-    <Modal.Footer>
-      <Button onClick={this.handleClose}>Close</Button>
-    </Modal.Footer>
-  </Modal>}
-      </div>
+        <Modal.Footer>
+          <Button onClick={this.handleClose}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+      }
+    </div>
     );
   }
 }
