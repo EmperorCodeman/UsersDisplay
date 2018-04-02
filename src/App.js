@@ -10,7 +10,8 @@ class App extends Component {
   super(props, context);
     console.log(initialUsers)
     this.state = {
-      users: initialUsers
+      users: initialUsers,
+      usersPointer : 4
     };
   }
   
@@ -23,11 +24,12 @@ class App extends Component {
   }
 
   handleSelect = (key, event) => {
-    //'https://randomuser.me/api/?results=3'
-    axios.get('https://randomuser.me/api/?results=3')
+    //progress through database 3 at a time and display those 3 in Carousel
+    this.setState({usersPointer: (this.state.usersPointer + 3)})
+    console.log("Calling node.js at: ", 'http://localhost:3000/users/'.concat(String(this.state.usersPointer)))
+    axios.get('http://localhost:3000/users/'.concat(String(this.state.usersPointer)))
     .then( (response) => {
       this.setState({ users: response.data.results})
-      //console.log(response.data.results[0], "hello");
       return response.data.results
   })
   .catch(function (error) {
@@ -35,7 +37,7 @@ class App extends Component {
   });
   }
   render() {
-    const { user, show, users } = this.state
+    const { user, show, users} = this.state
     return (
     <div className="App">
       <header className="App-header">
@@ -48,7 +50,8 @@ class App extends Component {
           <div key={user.name.first} onClick={this.handleClick.bind(this,user)}>
             <Image rounded width={200} height={150} alt="User Picture" src={user.picture.medium}/>
               <h3>{user.name.first}</h3>
-          </div>)}
+          </div>)
+          }
           </Carousel.Item>
       </Carousel>
       {user && show && 
@@ -83,8 +86,5 @@ class App extends Component {
     );
   }
 }
-
-
-
 
 export default App;
